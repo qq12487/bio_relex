@@ -28,19 +28,20 @@ BIORELEX_RELATION_TYPES = [NOT_RELATION, -1, 0, 1]
 DATASETS = [ADE, BIORELEX]
 
 # Model Save Path
-BASE_SAVE_PATH = '/shared/nas/data/m1/tuanml2/tmp'
+BASE_SAVE_PATH = './output/'
 
 # Caches
 CACHE_DIR = join(BASE_PATH, 'caches')
 UMLS_CONCEPTS_SQLITE = join(CACHE_DIR, 'umls_concepts.sqlite')
 
 # MetaMap and UMLS
-UMLS_EMBS = join(BASE_PATH, 'resources/umls_embs.pkl')
-UMLS_SEMTYPES_FILE = join(BASE_PATH, 'resources/umls_semtypes.txt')
-UMLS_RELTYPES_FILE = join(BASE_PATH, 'resources/umls_reltypes.txt')
-UMLS_TEXT2GRAPH_FILE = join(BASE_PATH, 'resources/text2graph.pkl')
+UMLS_DIR = join(BASE_PATH, 'resources')
+UMLS_EMBS = join(UMLS_DIR, 'umls_embs.pkl')
+UMLS_SEMTYPES_FILE = join(UMLS_DIR, 'umls_semtypes.txt')
+UMLS_RELTYPES_FILE = join(UMLS_DIR, 'umls_reltypes.txt')
+UMLS_TEXT2GRAPH_FILE = join(UMLS_DIR, 'text2graph.pkl')
 UMLS_EMBS_SIZE = 50 # https://github.com/r-mal/umls-embeddings
-METAMAP_PATH = '/shared/nas/data/m1/tuanml2/software/public_mm/bin/metamap20'
+METAMAP_PATH = '/home/yicih/Desktop/bio_relex-main/public_mm/bin/metamap20'
 MM_TYPES = ['aapp', 'acab', 'acty', 'aggp', 'amas', 'amph', 'anab', 'anim',
             'anst', 'antb', 'arch', 'bacs', 'bact', 'bdsu', 'bdsy', 'bhvr',
             'biof', 'bird', 'blor', 'bmod', 'bodm', 'bpoc', 'bsoj', 'celc',

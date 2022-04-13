@@ -17,9 +17,10 @@ from data import load_data
 from scorer import evaluate
 from models import JointModel
 from argparse import ArgumentParser
+from tensorboardX import SummaryWriter
 
 # Main Functions
-def train(configs):
+def train(configs, iters=0):
     tokenizer = AutoTokenizer.from_pretrained(configs['transformer'])
     train, dev = load_data(configs['dataset'], configs['split_nb'], tokenizer)
     model = JointModel(configs)
@@ -44,7 +45,9 @@ def train(configs):
 
     # Start training
     accumulated_loss = RunningAverage()
-    iters, batch_loss = 0, 0
+    batch_loss = 0
+
+    writer = SummaryWriter('runs/{}_{}_{}'.format(configs['dataset'], configs['config_name'],configs['split_nb']))
     for i in range(configs['epochs']):
         print('Starting epoch {}'.format(i+1), flush=True)
         model.in_ned_pretraining = i < configs['ned_pretrain_epochs']
@@ -69,6 +72,7 @@ def train(configs):
             # Report loss
             if iters % configs['report_frequency'] == 0:
                 print('{} Average Loss = {}'.format(iters, accumulated_loss()), flush=True)
+                writer.add_scalar('loss', accumulated_loss(), iters)
                 accumulated_loss = RunningAverage()
 
         # Evaluation after each epoch
@@ -87,12 +91,12 @@ def train(configs):
             torch.save({'model_state_dict': model.state_dict()}, save_path)
             print('Saved the model', flush=True)
 
-    return {'all': best_dev_score, 'mention': best_dev_m_score, 'relation': best_dev_rel_score}
+    return {'all': best_dev_score, 'mention': best_dev_m_score, 'relation': best_dev_rel_score}, iters
 
 if __name__ == "__main__":
     # Parse argument
     parser = ArgumentParser()
-    parser.add_argument('-c', '--config_name', default='basic')
+    parser.add_argument('-c', '--config_name', default='with_external_knowledge')
     parser.add_argument('-d', '--dataset', default=BIORELEX, choices=DATASETS)
     parser.add_argument('-s', '--split_nb', default=0) # Only affect ADE dataset
     args = parser.parse_args()

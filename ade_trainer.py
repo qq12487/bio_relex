@@ -25,7 +25,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument('-s', '--start_nb', default=0)
     parser.add_argument('-e', '--end_nb', default=10)
-    parser.add_argument('-c', '--config_name', default='basic')
+    parser.add_argument('-c', '--config_name', default='with_external_knowledge')
     args = parser.parse_args()
 
     # Determine the range
@@ -34,10 +34,13 @@ if __name__ == "__main__":
     split_nb_ranges = list(range(start_nb, end_nb))
 
     dev_scores = []
+    iters = 0
     for split_nb in split_nb_ranges:
+        print('split_nb : {}'.format(split_nb))
         configs = prepare_configs(args.config_name, ADE, split_nb)
         configs['gradient_checkpointing'] = False
-        dev_scores.append(train(configs))
+        output, iters = train(configs, iters)
+        dev_scores.append(output)
     print('end of ade training')
     print(dev_scores)
     with open('ade_10_fold_results.json', 'w+') as f:
