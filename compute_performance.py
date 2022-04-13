@@ -26,7 +26,7 @@ from argparse import ArgumentParser
 from collections import Counter
 from external_knowledge import umls_search_concepts
 
-if __name__ == "__main__":
+if __name__ == "__main__": # 輸入train好的model dir 可以看全部model的f1與avg.std
     # Parse argument
     parser = ArgumentParser()
     parser.add_argument('-m', '--models_dir', required=True)

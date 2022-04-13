@@ -77,9 +77,9 @@ def build_and_save_graph(g, title):
 if __name__ == "__main__":
     # Parse argument
     parser = ArgumentParser()
-    parser.add_argument('--truth_graphs', default='sent2truthgraph.json')
-    parser.add_argument('--first_phase_graphs', default='sent2predgraph_first.json')
-    parser.add_argument('--full_model_graphs', default='sent2predgraph_full.json')
+    parser.add_argument('--truth_graphs', default='sent2truthgraph.json')                 # 需先做完analyze_model.py
+    parser.add_argument('--first_phase_graphs', default='sent2predgraph_first.json')      # no use external knowledge
+    parser.add_argument('--full_model_graphs', default='sent2predgraph_full.json')        # use external knowledge
     args = parser.parse_args()
 
     # Load graphs
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         pred_graph_first = sent2graph_first[text]
         pred_graph_full = sent2graph_full[text]
 
-        if is_same_graph(pred_graph_full, pred_graph_first): continue
+        #if is_same_graph(pred_graph_full, pred_graph_first): continue
         if not is_same_graph(truth_graph, pred_graph_full): continue
 
         # Write to log_file

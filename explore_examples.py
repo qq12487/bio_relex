@@ -54,7 +54,7 @@ def examine(split, entity_types, relation_types):
         nodes, edges = graph['nodes'], graph['edges']
         # Map node to texts and semtypes
         print('\nNodes:')
-        kg_concepts = umls_search_concepts([text])[0][0]['concepts']
+        kg_concepts = umls_search_concepts([text])[0][0]['concepts'] # need metamap
         for n in nodes:
             node_texts, node_semtypes = [], []
             for c in kg_concepts:

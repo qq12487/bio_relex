@@ -36,7 +36,7 @@ def get_entity_mentions(sentence):
                 if entity['is_mentioned']:
                     typed_mentions.append({'start': start, 'end': end, 'label': cluster['label']})
     typed_mentions.sort(key=lambda x: x['start'])
-    return typed_mentions
+    return typed_mentions # mention的entity的 '開始結束位置與label'
 
 def graph_from_sent(sent_text, sent):
     nodes, edges = [], []
@@ -54,7 +54,7 @@ def graph_from_sent(sent_text, sent):
         r['tail_text'] = sent_text[tail_loc[0]:tail_loc[1]]
         edges.append(r)
 
-    return {'nodes': nodes, 'edges': edges}
+    return {'nodes': nodes, 'edges': edges} # node.edge資料
 
 if __name__ == "__main__":
     # Parse argument
@@ -95,13 +95,13 @@ if __name__ == "__main__":
     with torch.no_grad():
         for i in range(len(dev)):
             truth_sentence = dev[i].data
-            truth_ents = get_entity_mentions(truth_sentence)
+            truth_ents = get_entity_mentions(truth_sentence)   # mention的entity的 '開始結束位置與label'
             pred_sentence = model.predict(dev[i])
             pred_ents = get_entity_mentions(pred_sentence)
 
             # Update sent2truthgraph and sent2predgraph
-            sent_text = dev[i].text
-            sent2truthgraph[sent_text] = graph_from_sent(sent_text, truth_sentence)
+            sent_text = dev[i].text                            # raw sent
+            sent2truthgraph[sent_text] = graph_from_sent(sent_text, truth_sentence)    # node.edge資料
             sent2predgraph[sent_text] = graph_from_sent(sent_text, pred_sentence)
 
             # check if the prediction is the same as the annotation

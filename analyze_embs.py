@@ -30,7 +30,7 @@ print('len(all_sents) is {}'.format(len(all_sents)))
 all_concepts, appeared = [], set()
 cuid2embs = pickle.load(open(UMLS_EMBS, 'rb'))
 for text in all_sents:
-    concepts = umls_search_concepts([text], MM_TYPES)[0][0]['concepts']
+    concepts = umls_search_concepts([text], MM_TYPES)[0][0]['concepts'] # need metamap
     concepts = [c for c in concepts if c['cui'] in cuid2embs and (not c['cui'] in appeared)]
     for c in concepts: appeared.add(c['cui'])
     all_concepts += concepts
