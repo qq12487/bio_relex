@@ -361,6 +361,9 @@ def evaluate_biorelex(model, dataset):
             keys.add(dataset[i].id)
     mentions_score, relex_all_score = evaluate_sentences(truth_sentences, pred_sentences, keys)
     m_score = mentions_score.get_scores()['f_score']
-    relex_all_score = relex_all_score.get_scores()['f_score']
-    print('Mention Score (F1) = {} | Relation Extraction (F1) = {}'.format(m_score, relex_all_score))
-    return m_score, relex_all_score
+    r_all_score = relex_all_score.get_scores()['f_score']
+    print('Mention Score (F1) = {} | Relation Extraction (F1) = {}'.format(m_score, r_all_score))
+    # mentions_score.print_scores()
+    # relex_all_score.print_scores()
+
+    return m_score, r_all_score

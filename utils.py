@@ -34,6 +34,7 @@ def prepare_configs(config_name, dataset, split_nb, verbose=True):
     configs = pyhocon.ConfigFactory.parse_file(BASIC_CONF_PATH)[config_name]
     configs['dataset'] = dataset
     configs['split_nb'] = split_nb
+    configs['config_name'] = config_name
     if verbose: print(configs, flush=True)
 
     # Specific configs for each dataset
